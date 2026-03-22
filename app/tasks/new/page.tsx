@@ -1,14 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { addTask } from "@/lib/storage";
+import { useAuth } from "@/lib/auth";
 import Link from "next/link";
 
 const CATEGORIES = ["cleaning", "lawn", "maintenance", "home repair", "other"];
 
 export default function NewTaskPage() {
   const router = useRouter();
+  const { user, loading } = useAuth();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -16,19 +18,35 @@ export default function NewTaskPage() {
     category: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/auth");
+    }
+  }, [user, loading, router]);
+
+  if (loading || !user) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <p className="text-gray-600">Loading...</p>
+      </div>
+    );
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
 
     if (!formData.title.trim()) {
-      alert("Please enter a task title");
+      setError("Please enter a task title");
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      addTask({
+      await addTask(user.id, {
         title: formData.title,
         description: formData.description || undefined,
         dueDate: formData.dueDate || undefined,
@@ -37,9 +55,8 @@ export default function NewTaskPage() {
       });
 
       router.push("/");
-    } catch (error) {
-      console.error(error);
-      alert("Failed to create task");
+    } catch (err: any) {
+      setError(err.message || "Failed to create task");
       setIsSubmitting(false);
     }
   };
@@ -55,6 +72,13 @@ export default function NewTaskPage() {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Error Message */}
+          {error && (
+            <div className="p-4 bg-red-50 text-red-700 rounded-lg text-sm">
+              {error}
+            </div>
+          )}
+
           {/* Title */}
           <div>
             <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">

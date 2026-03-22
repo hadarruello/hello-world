@@ -5,24 +5,50 @@ import { Task, TaskFilter } from "@/lib/types";
 import { getTasks, toggleTask, deleteTask } from "@/lib/storage";
 import TaskItem from "./TaskItem";
 
-export default function TaskList() {
+interface TaskListProps {
+  userId: string;
+}
+
+export default function TaskList({ userId }: TaskListProps) {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [filter, setFilter] = useState<TaskFilter>("all");
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
 
+  // Load tasks on mount
   useEffect(() => {
-    setTasks(getTasks());
-    setIsLoading(false);
-  }, []);
+    loadTasks();
+  }, [userId]);
 
-  const handleToggle = (id: string) => {
-    toggleTask(id);
-    setTasks(getTasks());
+  const loadTasks = async () => {
+    try {
+      setIsLoading(true);
+      setError("");
+      const data = await getTasks(userId);
+      setTasks(data);
+    } catch (err: any) {
+      setError(err.message || "Failed to load tasks");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleDelete = (id: string) => {
-    deleteTask(id);
-    setTasks(getTasks());
+  const handleToggle = async (id: string) => {
+    try {
+      await toggleTask(id, userId);
+      await loadTasks();
+    } catch (err: any) {
+      setError(err.message || "Failed to toggle task");
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteTask(id, userId);
+      await loadTasks();
+    } catch (err: any) {
+      setError(err.message || "Failed to delete task");
+    }
   };
 
   const filteredTasks = tasks.filter((task) => {
@@ -32,7 +58,7 @@ export default function TaskList() {
   });
 
   if (isLoading) {
-    return <p className="text-gray-500">Loading tasks...</p>;
+    return <p className="text-gray-500 text-center py-8">Loading tasks...</p>;
   }
 
   return (
@@ -53,6 +79,13 @@ export default function TaskList() {
           </button>
         ))}
       </div>
+
+      {/* Error Message */}
+      {error && (
+        <div className="p-4 bg-red-50 text-red-700 rounded-lg">
+          {error}
+        </div>
+      )}
 
       {/* Task List */}
       <div className="space-y-3">
