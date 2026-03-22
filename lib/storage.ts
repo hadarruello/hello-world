@@ -12,7 +12,7 @@ export async function getTasks(userId: string): Promise<Task[]> {
 
   if (error) {
     console.error("Error fetching tasks:", error);
-    return [];
+    throw new Error(error.message || "Failed to fetch tasks");
   }
 
   return (data || []).map((task) => ({

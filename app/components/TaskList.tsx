@@ -14,11 +14,20 @@ export default function TaskList({ userId }: TaskListProps) {
   const [filter, setFilter] = useState<TaskFilter>("all");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [operatingTaskId, setOperatingTaskId] = useState<string | null>(null);
 
   // Load tasks on mount
   useEffect(() => {
     loadTasks();
   }, [userId]);
+
+  // Auto-dismiss errors after 5 seconds
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => setError(""), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
 
   const loadTasks = async () => {
     try {
@@ -35,19 +44,25 @@ export default function TaskList({ userId }: TaskListProps) {
 
   const handleToggle = async (id: string) => {
     try {
+      setOperatingTaskId(id);
       await toggleTask(id, userId);
       await loadTasks();
     } catch (err: any) {
       setError(err.message || "Failed to toggle task");
+    } finally {
+      setOperatingTaskId(null);
     }
   };
 
   const handleDelete = async (id: string) => {
     try {
+      setOperatingTaskId(id);
       await deleteTask(id, userId);
       await loadTasks();
     } catch (err: any) {
       setError(err.message || "Failed to delete task");
+    } finally {
+      setOperatingTaskId(null);
     }
   };
 
@@ -102,9 +117,10 @@ export default function TaskList({ userId }: TaskListProps) {
               task={task}
               onToggle={handleToggle}
               onDelete={handleDelete}
+              isOperating={operatingTaskId === task.id}
             />
           ))
-        )}
+        )
       </div>
 
       {/* Summary */}
