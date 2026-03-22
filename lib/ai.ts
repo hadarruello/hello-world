@@ -13,17 +13,16 @@ export async function generateTasksFromParagraph(
   paragraph: string
 ): Promise<ParsedTask[]> {
   const response = await client.messages.create({
-    model: "claude-3-5-sonnet-20241022",
+    model: "claude-opus-4-1",
     max_tokens: 1024,
     messages: [
       {
         role: "user",
-        content: `You are a task management assistant. Extract tasks from the following paragraph and return a JSON array of tasks. Each task should have: title (string), description (optional string), category (optional string - one of: cleaning, lawn, maintenance, home repair, other), and dueDate (optional ISO date string). Return ONLY valid JSON array, no other text.
+        content: `Extract tasks from this text. Return ONLY a JSON array with NO other text. Each task must have: title (string), description (optional), category (optional - one of: cleaning, lawn, maintenance, home repair, other), dueDate (optional ISO string), completed (false).
 
-Paragraph:
-${paragraph}
+Text: ${paragraph}
 
-Return JSON array like: [{"title":"...","description":"...","category":"...","dueDate":"2024-03-25","completed":false}]`,
+Example: [{"title":"Clean kitchen","description":"Deep clean","category":"cleaning","dueDate":null,"completed":false}]`,
       },
     ],
   });
@@ -34,20 +33,32 @@ Return JSON array like: [{"title":"...","description":"...","category":"...","du
     throw new Error("Unexpected response format from Claude");
   }
 
-  // Parse JSON response
-  const jsonMatch = content.text.match(/\[[\s\S]*\]/);
-  if (!jsonMatch) {
-    throw new Error("Could not parse tasks from AI response");
+  let tasks: ParsedTask[] = [];
+  
+  try {
+    // Try direct JSON parse first
+    tasks = JSON.parse(content.text);
+  } catch (e) {
+    // Try finding JSON in the text
+    const jsonMatch = content.text.match(/\[[\s\S]*\]/);
+    if (jsonMatch) {
+      try {
+        tasks = JSON.parse(jsonMatch[0]);
+      } catch (e2) {
+        console.error("Failed to parse found JSON:", e2);
+      }
+    }
   }
 
-  const tasks = JSON.parse(jsonMatch[0]) as ParsedTask[];
-
-  // Validate and transform tasks
-  return tasks.map((task) => ({
-    title: String(task.title || "").trim().slice(0, 100),
-    description: task.description ? String(task.description).trim().slice(0, 500) : undefined,
-    category: task.category || undefined,
-    dueDate: task.dueDate || undefined,
-    completed: false,
-  }));
+  console.log("Parsed tasks:", tasks);
+    // Validate and transform tasks
+  return tasks
+    .filter((task: any) => task && task.title)
+    .map((task: any) => ({
+      title: String(task.title).trim().slice(0, 100),
+      description: task.description ? String(task.description).trim().slice(0, 500) : undefined,
+      category: task.category || undefined,
+      dueDate: task.dueDate || undefined,
+      completed: false,
+    }));
 }

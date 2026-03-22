@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateTasksFromParagraph } from "@/lib/ai";
-import { addTask } from "@/lib/storage";
+import { addTaskServer } from "@/lib/storage-server";
 
 export async function POST(request: NextRequest) {
   try {
     const { paragraph, userId } = await request.json();
+
+    console.log("Generate tasks request:", { paragraphLength: paragraph?.length, userId });
 
     if (!paragraph || !userId) {
       return NextResponse.json(
@@ -34,7 +36,7 @@ export async function POST(request: NextRequest) {
     const createdTasks = [];
     for (const task of generatedTasks) {
       try {
-        const created = await addTask(userId, task);
+        const created = await addTaskServer(userId, task);
         createdTasks.push(created);
       } catch (err) {
         console.error("Failed to add task:", err);

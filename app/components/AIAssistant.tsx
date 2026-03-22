@@ -28,7 +28,7 @@ export default function AIAssistant({
     setSuccess("");
 
     try {
-      const response = await fetch("/api/ai/generate-tasks", {
+      const response = await fetch("/api/ai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ paragraph: input, userId }),
