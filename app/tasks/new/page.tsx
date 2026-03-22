@@ -66,8 +66,8 @@ export default function NewTaskPage() {
       <div className="max-w-md mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-zinc-50">New Task</h1>
-          <p className="text-zinc-400 mt-1">Add a new household task</p>
+          <h1 className="text-3xl font-bold text-white">New Task</h1>
+          <p className="text-white mt-1">Add a new household task</p>
         </div>
 
         {/* Form */}
@@ -81,7 +81,7 @@ export default function NewTaskPage() {
 
           {/* Title */}
           <div>
-            <label htmlFor="title" className="block text-sm font-medium text-zinc-200 mb-1">
+            <label htmlFor="title" className="block text-sm font-medium text-white mb-1">
               Task Title *
             </label>
             <input
@@ -92,14 +92,14 @@ export default function NewTaskPage() {
               onChange={(e) =>
                 setFormData({ ...formData, title: e.target.value })
               }
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 text-white bg-zinc-900 placeholder-gray-400"
               maxLength={100}
             />
           </div>
 
           {/* Description */}
           <div>
-            <label htmlFor="description" className="block text-sm font-medium text-zinc-200 mb-1">
+            <label htmlFor="description" className="block text-sm font-medium text-white mb-1">
               Description
             </label>
             <textarea
@@ -109,7 +109,7 @@ export default function NewTaskPage() {
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
               }
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 text-white bg-zinc-900 placeholder-gray-400"
               rows={3}
               maxLength={500}
             />
@@ -117,7 +117,7 @@ export default function NewTaskPage() {
 
           {/* Category */}
           <div>
-            <label htmlFor="category" className="block text-sm font-medium text-zinc-200 mb-1">
+            <label htmlFor="category" className="block text-sm font-medium text-white mb-1">
               Category
             </label>
             <select
@@ -126,7 +126,7 @@ export default function NewTaskPage() {
               onChange={(e) =>
                 setFormData({ ...formData, category: e.target.value })
               }
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 text-white bg-zinc-900"
             >
               <option value="">Select a category</option>
               {CATEGORIES.map((cat) => (
@@ -139,7 +139,7 @@ export default function NewTaskPage() {
 
           {/* Due Date */}
           <div>
-            <label htmlFor="dueDate" className="block text-sm font-medium text-zinc-200 mb-1">
+            <label htmlFor="dueDate" className="block text-sm font-medium text-white mb-1">
               Due Date
             </label>
             <input
@@ -149,7 +149,7 @@ export default function NewTaskPage() {
               onChange={(e) =>
                 setFormData({ ...formData, dueDate: e.target.value })
               }
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 text-white bg-zinc-900"
             />
           </div>
 
@@ -164,7 +164,7 @@ export default function NewTaskPage() {
             </button>
             <Link
               href="/"
-              className="flex-1 px-4 py-2 border border-zinc-600 text-zinc-200 rounded-lg font-medium hover:bg-zinc-800 transition-colors text-center"
+              className="flex-1 px-4 py-2 border border-zinc-600 text-white rounded-lg font-medium hover:bg-zinc-800 transition-colors text-center"
             >
               Cancel
             </Link>
