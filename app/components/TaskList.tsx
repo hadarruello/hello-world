@@ -70,6 +70,16 @@ export default function TaskList({ userId }: TaskListProps) {
     if (filter === "pending") return !task.completed;
     if (filter === "completed") return task.completed;
     return true;
+  }).sort((a, b) => {
+    // Tasks with due dates first, sorted by date
+    if (a.dueDate && b.dueDate) {
+      return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
+    }
+    // Tasks with due dates come before tasks without
+    if (a.dueDate) return -1;
+    if (b.dueDate) return 1;
+    // Tasks without due dates, keep original order
+    return 0;
   });
 
   if (isLoading) {
