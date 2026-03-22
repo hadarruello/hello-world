@@ -4,12 +4,14 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import TaskList from "./components/TaskList";
+import AIAssistant from "./components/AIAssistant";
 import { useAuth, signOut } from "@/lib/auth";
 
 export default function Home() {
   const router = useRouter();
   const { user, loading } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -69,8 +71,11 @@ export default function Home() {
         </div>
 
         {/* Task List */}
-        <TaskList userId={user.id} />
+        <TaskList key={refreshKey} userId={user.id} />
       </div>
+
+      {/* AI Assistant */}
+      <AIAssistant userId={user.id} onTasksGenerated={() => setRefreshKey((k) => k + 1)} />
     </div>
   );
 }
