@@ -34,16 +34,16 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4">
-      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-gray-900 mb-6 text-center">
+    <div className="min-h-screen bg-gradient-to-br from-zinc-900 to-black flex items-center justify-center px-4">
+      <div className="bg-zinc-800 rounded-lg shadow-lg p-8 w-full max-w-md border border-zinc-700">
+        <h1 className="text-3xl font-bold text-zinc-50 mb-6 text-center">
           Household Tasks
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Email */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="email" className="block text-sm font-medium text-zinc-200 mb-1">
               Email
             </label>
             <input
@@ -51,14 +51,14 @@ export default function AuthPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full px-4 py-2 border border-zinc-600 bg-zinc-700 text-zinc-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
               required
             />
           </div>
 
           {/* Password */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="password" className="block text-sm font-medium text-zinc-200 mb-1">
               Password
             </label>
             <input
@@ -66,13 +66,13 @@ export default function AuthPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full px-4 py-2 border border-zinc-600 bg-zinc-700 text-zinc-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
               required
             />
           </div>
 
           {/* Error Message */}
-          {error && <p className="text-red-600 text-sm">{error}</p>}
+          {error && <p className="text-red-400 text-sm">{error}</p>}
 
           {/* Submit Button */}
           <button
@@ -89,7 +89,7 @@ export default function AuthPage() {
         </form>
 
         {/* Toggle Auth Mode */}
-        <p className="text-center text-gray-600 text-sm mt-6">
+        <p className="text-center text-zinc-400 text-sm mt-6">
           {isSignUp
             ? "Already have an account? "
             : "Don't have an account? "}
@@ -98,7 +98,7 @@ export default function AuthPage() {
               setIsSignUp(!isSignUp);
               setError("");
             }}
-            className="font-medium text-blue-600 hover:text-blue-700"
+            className="font-medium text-blue-500 hover:text-blue-400"
           >
             {isSignUp ? "Sign In" : "Sign Up"}
           </button>

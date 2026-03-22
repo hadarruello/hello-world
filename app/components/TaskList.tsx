@@ -58,7 +58,7 @@ export default function TaskList({ userId }: TaskListProps) {
   });
 
   if (isLoading) {
-    return <p className="text-gray-500 text-center py-8">Loading tasks...</p>;
+    return <p className="text-zinc-400 text-center py-8">Loading tasks...</p>;
   }
 
   return (
@@ -72,7 +72,7 @@ export default function TaskList({ userId }: TaskListProps) {
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
               filter === tab
                 ? "bg-blue-600 text-white"
-                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                : "bg-zinc-800 text-zinc-300 hover:bg-zinc-700"
             }`}
           >
             {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -82,7 +82,7 @@ export default function TaskList({ userId }: TaskListProps) {
 
       {/* Error Message */}
       {error && (
-        <div className="p-4 bg-red-50 text-red-700 rounded-lg">
+        <div className="p-4 bg-red-900/20 text-red-400 rounded-lg">
           {error}
         </div>
       )}
@@ -90,7 +90,7 @@ export default function TaskList({ userId }: TaskListProps) {
       {/* Task List */}
       <div className="space-y-3">
         {filteredTasks.length === 0 ? (
-          <p className="text-gray-500 text-center py-8">
+          <p className="text-zinc-400 text-center py-8">
             {filter === "all" && "No tasks yet. Create one to get started!"}
             {filter === "pending" && "All caught up! No pending tasks."}
             {filter === "completed" && "No completed tasks yet."}
@@ -108,7 +108,7 @@ export default function TaskList({ userId }: TaskListProps) {
       </div>
 
       {/* Summary */}
-      <div className="text-sm text-gray-600 pt-4">
+      <div className="text-sm text-zinc-400 pt-4">
         {tasks.length} total • {tasks.filter((t) => !t.completed).length}{" "}
         pending • {tasks.filter((t) => t.completed).length} completed
       </div>

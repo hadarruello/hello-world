@@ -14,7 +14,7 @@ export default function TaskItem({
   onDelete,
 }: TaskItemProps) {
   return (
-    <div className="flex items-start gap-3 p-4 bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition-colors">
+    <div className="flex items-start gap-3 p-4 bg-zinc-800 rounded-lg border border-zinc-700 hover:border-zinc-600 transition-colors">
       {/* Checkbox */}
       <input
         type="checkbox"
@@ -28,8 +28,8 @@ export default function TaskItem({
         <h3
           className={`font-medium ${
             task.completed
-              ? "line-through text-gray-400"
-              : "text-gray-900"
+              ? "line-through text-zinc-500"
+              : "text-zinc-50"
           }`}
         >
           {task.title}
@@ -37,7 +37,7 @@ export default function TaskItem({
         {task.description && (
           <p
             className={`text-sm mt-1 ${
-              task.completed ? "text-gray-400" : "text-gray-600"
+              task.completed ? "text-zinc-500" : "text-zinc-400"
             }`}
           >
             {task.description}
@@ -45,12 +45,12 @@ export default function TaskItem({
         )}
         <div className="flex gap-2 mt-2 flex-wrap">
           {task.category && (
-            <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">
+            <span className="text-xs bg-blue-900/40 text-blue-300 px-2 py-1 rounded">
               {task.category}
             </span>
           )}
           {task.dueDate && (
-            <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
+            <span className="text-xs bg-zinc-700 text-zinc-300 px-2 py-1 rounded">
               Due: {new Date(task.dueDate).toLocaleDateString()}
             </span>
           )}
@@ -60,7 +60,7 @@ export default function TaskItem({
       {/* Delete Button */}
       <button
         onClick={() => onDelete(task.id)}
-        className="text-gray-400 hover:text-red-600 transition-colors text-lg"
+        className="text-zinc-500 hover:text-red-500 transition-colors text-lg"
         title="Delete task"
       >
         ✕

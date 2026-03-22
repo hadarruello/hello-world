@@ -19,8 +19,8 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Loading...</p>
+      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+        <p className="text-zinc-400">Loading...</p>
       </div>
     );
   }
@@ -41,15 +41,15 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-zinc-950">
       <div className="max-w-2xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900">
+            <h1 className="text-4xl font-bold text-zinc-50">
               Household Tasks
             </h1>
-            <p className="text-gray-600 text-sm mt-1">{user.email}</p>
+            <p className="text-zinc-400 text-sm mt-1">{user.email}</p>
           </div>
           <div className="flex gap-2">
             <Link
@@ -61,7 +61,7 @@ export default function Home() {
             <button
               onClick={handleSignOut}
               disabled={isSigningOut}
-              className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-400 transition-colors disabled:opacity-50"
+              className="px-4 py-2 bg-zinc-800 text-zinc-100 rounded-lg font-medium hover:bg-zinc-700 transition-colors disabled:opacity-50"
             >
               {isSigningOut ? "Signing out..." : "Sign Out"}
             </button>

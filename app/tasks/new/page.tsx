@@ -28,8 +28,8 @@ export default function NewTaskPage() {
 
   if (loading || !user) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Loading...</p>
+      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+        <p className="text-zinc-400">Loading...</p>
       </div>
     );
   }
@@ -62,26 +62,26 @@ export default function NewTaskPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-zinc-950">
       <div className="max-w-md mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">New Task</h1>
-          <p className="text-gray-600 mt-1">Add a new household task</p>
+          <h1 className="text-3xl font-bold text-zinc-50">New Task</h1>
+          <p className="text-zinc-400 mt-1">Add a new household task</p>
         </div>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Error Message */}
           {error && (
-            <div className="p-4 bg-red-50 text-red-700 rounded-lg text-sm">
+            <div className="p-4 bg-red-900/20 text-red-400 rounded-lg text-sm">
               {error}
             </div>
           )}
 
           {/* Title */}
           <div>
-            <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="title" className="block text-sm font-medium text-zinc-200 mb-1">
               Task Title *
             </label>
             <input
@@ -99,7 +99,7 @@ export default function NewTaskPage() {
 
           {/* Description */}
           <div>
-            <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="description" className="block text-sm font-medium text-zinc-200 mb-1">
               Description
             </label>
             <textarea
@@ -117,7 +117,7 @@ export default function NewTaskPage() {
 
           {/* Category */}
           <div>
-            <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="category" className="block text-sm font-medium text-zinc-200 mb-1">
               Category
             </label>
             <select
@@ -139,7 +139,7 @@ export default function NewTaskPage() {
 
           {/* Due Date */}
           <div>
-            <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="dueDate" className="block text-sm font-medium text-zinc-200 mb-1">
               Due Date
             </label>
             <input
@@ -164,7 +164,7 @@ export default function NewTaskPage() {
             </button>
             <Link
               href="/"
-              className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors text-center"
+              className="flex-1 px-4 py-2 border border-zinc-600 text-zinc-200 rounded-lg font-medium hover:bg-zinc-800 transition-colors text-center"
             >
               Cancel
             </Link>
