@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import TaskList from "./components/TaskList";
-import AIAssistant from "./components/AIAssistant";
+import AITaskGenerator from "./components/AITaskGenerator";
 import { useAuth, signOut } from "@/lib/auth";
 
 export default function Home() {
@@ -70,12 +70,12 @@ export default function Home() {
           </div>
         </div>
 
+        {/* AI Task Generator */}
+        <AITaskGenerator userId={user.id} onTasksGenerated={() => setRefreshKey((k) => k + 1)} />
+
         {/* Task List */}
         <TaskList key={refreshKey} userId={user.id} />
       </div>
-
-      {/* AI Assistant */}
-      <AIAssistant userId={user.id} onTasksGenerated={() => setRefreshKey((k) => k + 1)} />
     </div>
   );
 }
