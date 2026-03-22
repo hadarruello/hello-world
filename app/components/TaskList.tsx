@@ -120,7 +120,7 @@ export default function TaskList({ userId }: TaskListProps) {
               isOperating={operatingTaskId === task.id}
             />
           ))
-        )
+        )}
       </div>
 
       {/* Summary */}
